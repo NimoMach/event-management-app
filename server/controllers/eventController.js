@@ -1,9 +1,6 @@
 const Event = require("../models/Event");
 const Registration = require("../models/Registration");
 
-// @route   GET /api/events
-// @desc    Get all events with search & filters
-// @access  Public
 const getEvents = async (req, res) => {
   const { search, category, location } = req.query;
   let query = {};
@@ -17,9 +14,7 @@ const getEvents = async (req, res) => {
   res.json(events);
 };
 
-// @route   GET /api/events/:id
-// @desc    Get event details
-// @access  Public
+
 const getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -35,10 +30,6 @@ const getEventById = async (req, res) => {
 };
 
 
-
-// @route   GET /api/events/user
-// @desc    Get logged-in user's registered events
-// @access  Private
 const getUserRegisteredEvents = async (req, res) => {
   try {
     const registrations = await Registration.find({
