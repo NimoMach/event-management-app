@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const Registration = require("../models/Registration");
 
 // @route   GET /api/events
 // @desc    Get all events with search & filters
@@ -33,7 +34,28 @@ const getEventById = async (req, res) => {
   }
 };
 
+
+
+// @route   GET /api/events/user
+// @desc    Get logged-in user's registered events
+// @access  Private
+const getUserRegisteredEvents = async (req, res) => {
+  try {
+    const registrations = await Registration.find({
+      user: req.user._id,
+    }).populate("event");
+
+    const events = registrations.map((reg) => reg.event);
+
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 module.exports = {
   getEvents,
   getEventById,
+  getUserRegisteredEvents,
 };

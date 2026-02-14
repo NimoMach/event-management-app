@@ -3,14 +3,21 @@ import API from "../api";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUserEvents();
+    fetchRegisteredEvents();
   }, []);
 
-  const fetchUserEvents = async () => {
-    const res = await API.get("/api/events/user");
-    setEvents(res.data);
+  const fetchRegisteredEvents = async () => {
+    try {
+      const res = await API.get("/api/events/user");
+      setEvents(res.data);
+    } catch (error) {
+      console.error("Error fetching registered events:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const now = new Date();
@@ -22,6 +29,8 @@ function Dashboard() {
   const past = events.filter(
     (event) => new Date(event.date) < now
   );
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>
