@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api";
+import EventCard from "../components/EventCard";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -35,25 +36,16 @@ function Dashboard() {
   return (
     <div>
       <h2>My Registered Events</h2>
-
       <h3>Upcoming Events</h3>
       {upcoming.length === 0 && <p>No upcoming events</p>}
       {upcoming.map((event) => (
-        <div key={event._id}>
-          <h4>{event.name}</h4>
-          <p>{event.location}</p>
-          <p>{new Date(event.date).toLocaleDateString()}</p>
-        </div>
+        <EventCard key={event._id} event={event} />
       ))}
 
       <h3>Past Events</h3>
       {past.length === 0 && <p>No past events</p>}
       {past.map((event) => (
-        <div key={event._id}>
-          <h4>{event.name}</h4>
-          <p>{event.location}</p>
-          <p>{new Date(event.date).toLocaleDateString()}</p>
-        </div>
+        <EventCard key={event._id} event={event} />
       ))}
     </div>
   );

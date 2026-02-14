@@ -4,9 +4,12 @@ function EventCard({ event }) {
   return (
     <div>
       <h3>{event.name}</h3>
-      <p>{event.location}</p>
-      <p>{new Date(event.date).toLocaleDateString()}</p>
-      <p>Available Seats: {event.availableSeats}</p>
+      <p>Category: {event.category}</p>
+      <p>Location: {event.location}</p>
+      <p>
+        Date:{" "}
+        {new Date(event.date).toLocaleDateString()}
+      </p>
       <Link to={`/event/${event._id}`}>View Details</Link>
     </div>
   );
